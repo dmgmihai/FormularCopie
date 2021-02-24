@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
    
 use App\Models\Form;
 use Illuminate\Http\Request;
-  
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
+use Image;
+
+
 class FormController extends Controller
 {
     /**
@@ -40,13 +45,37 @@ class FormController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:forms,email',
             'phone' => 'required',          # Inregistrare in baza de date
             'detail' => 'required',
+            'image' => 'required|max:2048' ,   # mimes:jpeg,pdf nu mai pot uploada
             'g-recaptcha-response' => 'required|captcha',
 
         ]);
-    
+        $form = new Form($request->input()) ;
+        $file = $request->file('image') ;
+        
+        if($file = $request->hasFile('image')) {
+            $file = $request->file('image') ;
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path().'/storage/' ;
+            $file->move($destinationPath,$fileName);
+            $form->image = $fileName ;
+                };
+                
+        $form->save(); 
+       /*
+       $img = $request->file('image');
+       $extension = $img->getClientOriginalExtension();
+       Storage::disk('public')->put($img->getFilename().'.'.$extension,  File::get($img));
+   
+       $form = new Form();
+       
+       $form->mime = $img->getClientMimeType();
+       $form->image = $img->getClientOriginalName();
+       $form->filename = $img->getFilename().'.'.$extension;
+       $form->save();    
+         */           
         Form::create($request->all());  # toate datele
      
         return redirect()->route('forms.index')     # redirectionare pagina principala dupa inregistrare in DB
@@ -61,7 +90,20 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
+        $request = new Request ;
         return view('forms.show',compact('form'));
+        $form = new Form($request->input()) ;
+        $file = $request->file('image') ;
+        
+        if($file = $request->hasFile('image')) {
+            $file = $request->file('image') ;
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path().'/storage/' ;
+            $file->move($destinationPath,$fileName);
+            $form->image = $fileName ;
+                };
+                
+        $form->save(); 
     } 
      
     /**
@@ -86,9 +128,10 @@ class FormController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:forms,email',
             'phone'=> 'required',
-            'detail' => 'required',                     # Actualziare date idem create
+            'detail' => 'required',
+            'image' => 'required|max:2048',                     # Actualziare date idem create
             'g-recaptcha-response' => 'required|captcha',
         ]);
     

@@ -31,19 +31,25 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $form->name }}" class="form-control" placeholder="Name">
+                    <input type="fname" name="name" value="{{ $form->name }}" class="form-control" placeholder="Name">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Email:</strong>
-                    <input type="text" name="email" value="{{ $form->email}}" class="form-control" placeholder="Email">
+                    <input type="email" name="email" value="{{ $form->email}}" class="form-control" placeholder="Email">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Phone:</strong>
-                    <input type="text" name="phone" value="{{ $form->phone }}" class="form-control" placeholder="Phone">
+                    <input type="text" name="phone" value="{{ $form->phone }}" class="form-control" placeholder="Phone"  maxlength="10">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Image:</strong>
+                    <input type="file" name="image" class="form-control" placeholder="Image" >
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">

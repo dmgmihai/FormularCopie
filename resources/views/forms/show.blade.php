@@ -37,5 +37,11 @@
                 {{ $form->detail }}
             </div>
         </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Image:</strong>
+                <td><img src='{{ asset("storage/$form->image") }}' width="100px" length='100px'" >{{ $form->image }}</td>
+            </div>
+        </div>
     </div>
 @endsection

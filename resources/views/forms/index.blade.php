@@ -25,15 +25,18 @@
             <th>Email</th>
             <th>Phone</th>          {{-- headere--}}
             <th>Details</th>
+            <th>Image</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($forms as $form)
+        @foreach ($forms->reverse() as $form)
         <tr>
             <td>{{ ++$i }}</td>        
             <td>{{ $form->name }}</td>
             <td>{{ $form->email }}</td>         {{-- date celule--}}
             <td>{{ $form->phone }}</td>
             <td>{{ $form->detail }}</td>
+            <td><img src='{{ asset("storage/$form->image") }}' width="100px" length='100px'>{{ $form->image }}</td>  {{--  'asset("storage/$form->image" }})' --}}
+            {{--  data:image/png;base64,' . base64_encode($form->image ']) --}}
             <td>
                 <form action="{{ route('forms.destroy',$form->id) }}" method="POST">    {{-- sterge formular --}}
    
